@@ -28,11 +28,13 @@ app.use(cors());
 const carRoutes = require('./routes/carRoutes');
 const locationRoutes = require('./routes/locationRoutes');
 const boltRoutes = require('./routes/boltRoutes');
+const torqueDetails = require('./routes/torqueDetails');
 // Import other routes as you define them
 
 app.use('/api', carRoutes);
 app.use('/api', locationRoutes);
 app.use('/api', boltRoutes);
+app.use('/api', torqueDetails);
 // Use other routes similarly
 
 // catch 404 and forward to error handler

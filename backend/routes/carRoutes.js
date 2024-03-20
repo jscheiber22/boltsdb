@@ -28,4 +28,53 @@ router.get('/cars', async (req, res) => {
     }
 });
 
+
+// Route to fetch all car makes
+router.get('/cars/makes', async (req, res) => {
+    try {
+      const { rows } = await pool.query('SELECT DISTINCT Make FROM Cars ORDER BY Make');
+      res.json(rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  });
+
+
+router.get('/:make/models', async (req, res) => {
+    // console.log(req.params.make);
+    // if (req.params.make == 'Ford'){
+    //     res.json(['Focus', 'Fusion', 'Fiesta', 'Bronco', 'Explorer', 'Expedition'])
+    // } else if (req.params.make == 'Honda'){
+    //     res.json(['Civic', 'Accord', 'Odyssey', 'CRZ', 'CRX', 'CRV'])
+    // } 
+    const make = req.params.make;
+    try {
+      const { rows } = await pool.query('SELECT Model FROM Cars WHERE Make = $1 ORDER BY Model', [make]);
+      res.json(rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+});
+
+
+router.get('/:make/:model/dates', async (req, res) => {
+    // res.json(['2001-2006', '2006-2012', '2013-2024'])
+    const { make, model } = req.params;
+  try {
+    const query = `
+      SELECT StartYear || '-' || EndYear AS YearRange
+      FROM Cars
+      WHERE Make = $1 AND Model = $2
+      ORDER BY StartYear, EndYear
+    `;
+    const { rows } = await pool.query(query, [make, model]);
+    res.json(rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;
