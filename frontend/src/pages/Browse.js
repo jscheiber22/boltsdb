@@ -14,7 +14,7 @@ const Browse = () => {
   useEffect(() => {
     const fetchManufacturers = async () => {
       try {
-        const response = await axios.get('http://localhost:9000/api/cars/makes');
+        const response = await axios.get(process.env.REACT_APP_API_URI + '/api/cars/makes');
         setManufacturers(
           response.data.map(function(make) {
             return make['make'];
@@ -30,7 +30,7 @@ const Browse = () => {
   const handleManufacturerClick = async (manufacturer) => {
     setSelectedManufacturer(manufacturer);
     try {
-      const response = await axios.get(`http://localhost:9000/api/${manufacturer}/models`);
+      const response = await axios.get(process.env.REACT_APP_API_URI + `/api/${manufacturer}/models`);
       setModels(
         response.data.map(function(model) {
           return model['model'];
@@ -45,7 +45,7 @@ const Browse = () => {
   const handleModelClick = async (model) => {
     setSelectedModel(model);
     try {
-      const response = await axios.get(`http://localhost:9000/api/${selectedManufacturer}/${model}/dates`);
+      const response = await axios.get(process.env.REACT_APP_API_URI + `/api/${selectedManufacturer}/${model}/dates`);
       console.log(response.data);
       setDateRanges(response.data.map(function(years) {
         return years['yearrange'];

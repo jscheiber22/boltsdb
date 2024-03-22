@@ -20,7 +20,7 @@ function Home() {
   // Fetch cars from the backend
   const fetchCars = async () => {
     try {
-      const response = await axios.get('http://localhost:9000/api/cars');
+      const response = await axios.get(process.env.REACT_APP_API_URI + '/api/cars');
       setCars(response.data);
     } catch (error) {
       console.error('Error fetching cars:', error);
@@ -36,7 +36,7 @@ function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:9000/api/cars', newCar);
+      await axios.post(process.env.REACT_APP_API_URI + '/api/cars', newCar);
       fetchCars(); // Refresh the list of cars
       setNewCar({ make: '', model: '', startYear: '', endYear: '' }); // Reset form
     } catch (error) {

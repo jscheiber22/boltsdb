@@ -10,7 +10,7 @@ const TorqueDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:9000/api/car-details/${make}/${model}/${startYear}/${endYear}`);
+        const response = await axios.get(process.env.REACT_APP_API_URI + `/api/car-details/${make}/${model}/${startYear}/${endYear}`);
         setBolts(response.data);
         console.log(response.data);
       } catch (error) {
