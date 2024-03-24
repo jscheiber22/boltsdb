@@ -30,8 +30,8 @@ const searchCars = async (input) => {
     }
 
     const query = `
-      SELECT * FROM Cars
-      WHERE Make = $1 AND Model = $2 AND $3 BETWEEN StartYear AND EndYear
+    SELECT * FROM Cars
+    WHERE LOWER(Make) = LOWER($1) AND LOWER(Model) = LOWER($2) AND $3 BETWEEN StartYear AND EndYear    
     `;
     const values = [make, model, year];
     const result = await pool.query(query, values);
@@ -50,10 +50,11 @@ const searchCars = async (input) => {
 };
 
 // Example usage
-router.get('/search', async(req, res) => {
+router.get('/searchCars', async(req, res) => {
   try{
-    const { searchString } = req.query;
-    const results = searchCars(searchString);
+    const { search } = req.query;
+    console.log(search);
+    const results = await searchCars(search);
     if (results){
       res.json(results);
     }

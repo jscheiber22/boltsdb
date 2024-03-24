@@ -29,12 +29,14 @@ const carRoutes = require('./routes/carRoutes');
 const locationRoutes = require('./routes/locationRoutes');
 const boltRoutes = require('./routes/boltRoutes');
 const torqueDetails = require('./routes/torqueDetails');
+const searchCars = require('./routes/searchCars');
 // Import other routes as you define them
 
 app.use('/api', carRoutes);
 app.use('/api', locationRoutes);
 app.use('/api', boltRoutes);
 app.use('/api', torqueDetails);
+app.use('/api', searchCars);
 // Use other routes similarly
 
 // catch 404 and forward to error handler

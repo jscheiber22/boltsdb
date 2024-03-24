@@ -14,6 +14,7 @@ router.get('/car-details/:make/:model/:startYear/:endYear', async (req, res) => 
         JOIN CarLocations cl ON cl.CarLocationID = clb.CarLocationID
         JOIN Cars c ON c.CarID = cl.CarID
         WHERE c.Make = $1 AND c.Model = $2 AND c.StartYear = $3 AND c.EndYear = $4
+        ORDER BY b.Name ASC;
       `;
       const { rows } = await pool.query(query, [make, model, startYear, endYear]);
       res.json(rows);

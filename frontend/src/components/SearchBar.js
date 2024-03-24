@@ -3,20 +3,18 @@ import { TextField, Button, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 
-function SearchBar() {
+const SearchBar = ({ onSearchResults }) => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState({});
   
     async function handleSearch(event) {
       event.preventDefault();
-      // Implement your search logic here
-      await axios
-            .get('http://localhost:5432/search/' + event.target.value)
-            .then((response) => {
-                console.log(response.data);
-                setSearchResults(response.data);
-            })
-    //   console.log(searchTerm);
+      try {
+        const response = await axios.get(process.env.REACT_APP_API_URI + '/api/searchCars?search=' + encodeURIComponent(searchTerm));
+        // Assuming onSearchResults is a callback prop for handling the search results in the parent component
+        onSearchResults(response.data);
+      } catch (error) {
+        console.error('Failed to fetch search results:', error);
+      }
     };
   
     return (
@@ -27,7 +25,7 @@ function SearchBar() {
           alignItems: 'center',
           width: 'auto',
         }}
-        onSubmit={handleSearch}
+        onClick={handleSearch}
       >
         <TextField
           variant="outlined"
@@ -40,9 +38,6 @@ function SearchBar() {
         <Button type="submit" variant="contained" color="primary" sx={{ p: '10px' }}>
           <SearchIcon />
         </Button>
-        { searchResults &&
-            <p>{searchResults[0]}</p>
-        }
       </Box>
     );
   }

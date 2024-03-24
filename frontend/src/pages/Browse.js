@@ -63,9 +63,9 @@ const Browse = () => {
 
   return (
     <Grid container spacing={2} marginTop={"1%"}>
-        <Grid item xs={0} md={3}>
+        <Grid item xs={1} md={3}>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={10} md={6}>
             <Typography variant='h4' textAlign={"center"}>Make</Typography>
             <Box sx={{
                 display: 'grid',

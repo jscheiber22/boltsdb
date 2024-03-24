@@ -23,8 +23,11 @@ const TorqueDetails = () => {
 
   return (
     <Container maxWidth="md" style={{marginTop: "2%"}}>
-      <Typography variant="h3" gutterBottom>
-        {make} {model} ({startYear}-{endYear}) Details
+      <Typography variant="h3" gutterBottom align='center'>
+        All Torque Specifications For
+      </Typography>
+      <Typography variant="h2" gutterBottom align='center'>
+        {make} {model} ({startYear}-{endYear})
       </Typography>
       <Grid container spacing={2} marginTop={"2%"}>
         {bolts.length ? (

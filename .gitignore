@@ -3,3 +3,4 @@ boltsDB.code-workspace
 node_modules/
 addDataToDB.py
 node_modules
+build/

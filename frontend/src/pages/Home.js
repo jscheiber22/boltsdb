@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchBar from '../components/SearchBar';
-import { Grid, Typography } from '@mui/material';
+import { Grid, List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const [cars, setCars] = useState([]);
@@ -11,6 +12,7 @@ function Home() {
     startYear: '',
     endYear: '',
   });
+  const [searchResults, setSearchResults] = useState([]);
 
   // Fetch cars on component mount
   useEffect(() => {
@@ -46,17 +48,47 @@ function Home() {
 
   return (
     <Grid container spacing={2}>
-        <Grid item xs={0} md={3}>
+        <Grid item xs={1} md={3}>
         </Grid>
-        <Grid item xs={12} md={6}>
-        <Typography variant="h2" textAlign={"center"} marginTop={"2%"}>
+        <Grid item xs={10} md={6}>
+        <div style={{marginTop: "2%"}}></div>
+        <Typography variant='h2' textAlign={"center"}>
+          Welcome to boltsDB!
+        </Typography>
+        <Typography variant='h4' textAlign={"center"} marginBottom={"2%"}>
+        your go-to source for automotive torque specifications.
+        </Typography>
+        <Typography variant='body1' textAlign={"center"} marginBottom={"5%"}>
+          Our platform offers an intuitive and efficient way to find precise torque specs for any vehicle. At boltsDB, we ensure you have all the torque specs at your fingertips, making your automotive projects smoother and more reliable. Perfect for both professionals and enthusiasts, boltsDB is the key to accurate and hassle-free vehicle maintenance and repair.
+        </Typography>
+        <Typography variant="h2" textAlign={"center"} marginTop={"10%"} marginBottom={"1%"}>
           Find Your Car
         </Typography>
-        <Typography variant='body1' textAlign={"center"}>
+          <SearchBar onSearchResults={setSearchResults} />
+          <Typography variant='body1' textAlign={"center"} marginTop={"1%"}>
+          Start by using the search bar to quickly locate your car's make, model, and year, or browse through our extensive database to find exactly what you need.
+          </Typography>
 
-        </Typography>
-          <SearchBar />
-          <div className="App">
+          { searchResults.length > 0 &&
+          <Paper elevation={3} sx={{ margin: '20px', padding: '20px' }}>
+            <List component="nav" aria-label="car links">
+              {searchResults.map((car) => {
+                const { carid, make, model, startyear, endyear } = car;
+                const linkPath = `/${make}/${model}/${startyear}/${endyear}`;
+
+                return (
+                  <Link to={linkPath} key={carid} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <ListItem>
+                      <ListItemText primary={`${make} ${model} (${startyear} - ${endyear})`} />
+                    </ListItem>
+                  </Link>
+                );
+              })}
+            </List>
+          </Paper>
+          }
+
+          {/* <div className="App"> */}
             {/* <h1>Car Information</h1>
             <form onSubmit={handleSubmit}>
               <input
@@ -90,13 +122,13 @@ function Home() {
               <button type="submit">Add Car</button>
             </form> */}
 
-            <h2>List of Cars</h2>
+            {/* <h2>List of Cars</h2>
             <ul>
               {cars.map((car) => (
                 <li key={car.carId}>{`${car.make} ${car.model} (${car.startYear} - ${car.endYear})`}</li>
               ))}
             </ul> 
-          </div>
+          </div> */}
           </Grid> 
           <Grid item xs={0} md={3}>
           </Grid>
