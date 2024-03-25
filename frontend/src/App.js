@@ -6,6 +6,7 @@ import TermsOfUse from './pages/TermsOfUse';
 import Contact from './pages/Contact';
 import Browse from './pages/Browse';
 import TorqueDetails from './pages/TorqueDetails';
+import AboutUs from './pages/AboutUs';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-use" element={<TermsOfUse />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/browse" element={<Browse />} />
           <Route path="/:make/:model/:startYear/:endYear" element={<TorqueDetails />} />
           {/* Other routes */}

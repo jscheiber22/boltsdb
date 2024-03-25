@@ -27,7 +27,7 @@ const Header = () => {
                 <Button href="/browse" sx={{ my: 1, mx: 1.5 }}>
                     Browse
                 </Button>
-                <Button href="#" sx={{ my: 1, mx: 1.5 }}>
+                <Button href="/about" sx={{ my: 1, mx: 1.5 }}>
                     About
                 </Button>
                 </Box>
