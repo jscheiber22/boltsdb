@@ -1,5 +1,5 @@
 const express = require('express');
-const pool = require('../db'); // Adjust the path based on your structure
+const pool = require('../db');
 const router = express.Router();
 
 const parseSearchInput = (input) => {
@@ -49,7 +49,7 @@ const searchCars = async (input) => {
   }
 };
 
-// Example usage
+// Route to execute search
 router.get('/searchCars', async(req, res) => {
   try{
     const { search } = req.query;

@@ -1,5 +1,5 @@
 const express = require('express');
-const pool = require('../db'); // Adjust the path based on your structure
+const pool = require('../db');
 const router = express.Router();
 
 // Add a new car
@@ -31,26 +31,21 @@ router.get('/cars', async (req, res) => {
 
 // Route to fetch all car makes
 router.get('/cars/makes', async (req, res) => {
-    try {
-      const { rows } = await pool.query('SELECT DISTINCT Make FROM Cars ORDER BY Make');
-      res.json(rows);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
-  });
+  try {
+    const { rows } = await pool.query('SELECT DISTINCT Make FROM Cars ORDER BY Make');
+    res.json(rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 
+// Route to fetch all models of a given make
 router.get('/:make/models', async (req, res) => {
-    // console.log(req.params.make);
-    // if (req.params.make == 'Ford'){
-    //     res.json(['Focus', 'Fusion', 'Fiesta', 'Bronco', 'Explorer', 'Expedition'])
-    // } else if (req.params.make == 'Honda'){
-    //     res.json(['Civic', 'Accord', 'Odyssey', 'CRZ', 'CRX', 'CRV'])
-    // } 
     const make = req.params.make;
     try {
-      const { rows } = await pool.query('SELECT Model FROM Cars WHERE Make = $1 ORDER BY Model', [make]);
+      const { rows } = await pool.query('SELECT DISTINCT Model FROM Cars WHERE Make = $1 ORDER BY Model', [make]);
       res.json(rows);
     } catch (err) {
       console.error(err.message);
@@ -59,9 +54,9 @@ router.get('/:make/models', async (req, res) => {
 });
 
 
+// Route to fetch all year ranges of a given make and model 
 router.get('/:make/:model/dates', async (req, res) => {
-    // res.json(['2001-2006', '2006-2012', '2013-2024'])
-    const { make, model } = req.params;
+  const { make, model } = req.params;
   try {
     const query = `
       SELECT StartYear || '-' || EndYear AS YearRange
